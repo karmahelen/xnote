@@ -1,0 +1,332 @@
+/* ── xnote mobile overrides ────────────────────────────────────────────── */
+/* Only active on screens <= 600px. Desktop/local mode is unaffected.     */
+
+@media (max-width: 600px) {
+
+    /* ── Base ──────────────────────────────────────────────────────────── */
+    html, body {
+        overflow: auto;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    /* Hide custom scrollbar — use native on mobile */
+    ::-webkit-scrollbar { display: none; }
+
+    /* ── App shell ─────────────────────────────────────────────────────── */
+    #app {
+        height: auto;
+        min-height: 100vh;
+    }
+
+    /* ── Topbar ────────────────────────────────────────────────────────── */
+    .topbar {
+        flex-wrap: wrap;
+        padding: 12px 16px;
+        gap: 10px;
+        position: relative;
+        -webkit-app-region: unset;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+        font-size: 16px;
+    }
+
+    .topbar-actions {
+        margin-left: auto;
+        gap: 6px;
+    }
+
+    .topbar-actions .btn {
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+
+    .btn-settings {
+        padding: 8px 12px;
+    }
+
+    /* Search drops to its own row */
+    .search-wrap {
+        order: 3;
+        flex-basis: 100%;
+        max-width: none;
+    }
+
+    .search-wrap input {
+        font-size: 16px; /* prevents iOS zoom on focus */
+        padding: 10px 14px 10px 36px;
+    }
+
+    /* Dropdown fills width on mobile */
+    .dropdown {
+        max-height: 50vh;
+    }
+
+    .dropdown-item {
+        padding: 12px 16px;
+    }
+
+    .dropdown-item .title {
+        font-size: 14px;
+    }
+
+    .dropdown-item .date {
+        font-size: 12px;
+    }
+
+    /* ── Views ─────────────────────────────────────────────────────────── */
+    .view {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* ── Home View ─────────────────────────────────────────────────────── */
+    .tab-bar {
+        padding: 16px 16px 8px;
+        gap: 8px;
+    }
+
+    .tab {
+        font-size: 11px;
+    }
+
+    .note-list {
+        padding: 0 16px 16px;
+    }
+
+    .note-row {
+        padding: 16px;
+        margin-bottom: 4px;
+        border-radius: 6px;
+    }
+
+    .note-row .title {
+        font-size: 15px;
+    }
+
+    .note-row .date {
+        font-size: 12px;
+    }
+
+    .empty-state {
+        padding: 40px 16px;
+    }
+
+    .pagination {
+        padding: 8px 16px 16px;
+    }
+
+    .pagination .btn {
+        padding: 10px 16px;
+        font-size: 12px;
+        min-height: 40px;
+    }
+
+    /* ── Editor View ───────────────────────────────────────────────────── */
+    .editor {
+        padding: 16px;
+        gap: 10px;
+    }
+
+    .field-input {
+        font-size: 16px; /* prevents iOS zoom */
+        padding: 12px 14px;
+    }
+
+    .editor-toolbar {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .editor-body textarea {
+        font-size: 15px;
+        padding: 14px;
+        line-height: 1.6;
+    }
+
+    .editor-actions {
+        padding-bottom: 16px;
+        gap: 8px;
+    }
+
+    .editor-actions .btn {
+        padding: 12px 20px;
+        font-size: 13px;
+    }
+
+    /* ── Viewer View ───────────────────────────────────────────────────── */
+    .viewer {
+        padding: 0 16px 16px;
+    }
+
+    .viewer-header {
+        padding: 16px 0 10px;
+    }
+
+    .viewer-title {
+        font-size: 19px;
+    }
+
+    .viewer-meta {
+        gap: 6px;
+    }
+
+    .chip {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+
+    .viewer-actions {
+        gap: 6px;
+        margin-bottom: 12px;
+    }
+
+    .viewer-actions .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    .viewer-body-inner {
+        padding: 18px 16px;
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .viewer-body-inner pre {
+        padding: 12px 14px;
+        font-size: 13px;
+    }
+
+    .viewer-body-inner table {
+        font-size: 13px;
+        display: block;
+        overflow-x: auto;
+    }
+
+    .viewer-body-inner th,
+    .viewer-body-inner td {
+        padding: 6px 10px;
+    }
+
+    /* ── Config View ───────────────────────────────────────────────────── */
+    .config {
+        padding: 16px;
+    }
+
+    .config-row {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .config-row label {
+        width: 100%;
+        font-size: 13px;
+    }
+
+    .color-swatch {
+        width: 36px;
+        height: 36px;
+    }
+
+    .color-hex {
+        font-size: 13px;
+    }
+
+    .config-select {
+        font-size: 16px; /* prevents iOS zoom */
+        min-width: unset;
+        flex: 1;
+    }
+
+    .font-preview {
+        display: none; /* too cramped on mobile */
+    }
+
+    .preset-bar {
+        gap: 8px;
+    }
+
+    .preset-btn {
+        padding: 10px 16px;
+        font-size: 12px;
+    }
+
+    .config-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .config-actions > div {
+        display: flex;
+        gap: 8px;
+    }
+
+    .config-actions .btn {
+        flex: 1;
+        padding: 12px 16px;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    /* ── Dialog ─────────────────────────────────────────────────────────── */
+    .dialog {
+        padding: 24px;
+        border-radius: 10px;
+    }
+
+    .dialog-actions .btn {
+        padding: 12px 20px;
+        font-size: 13px;
+    }
+
+    /* ── Buttons (global touch target increase) ────────────────────────── */
+    .btn {
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-settings {
+        min-height: 40px;
+        min-width: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* ── Animations (reduce motion on mobile) ──────────────────────────── */
+    .note-row {
+        animation-duration: 0.15s;
+    }
+}
+
+/* ── Extra small screens (< 380px) ─────────────────────────────────────── */
+@media (max-width: 380px) {
+    .topbar {
+        padding: 10px 12px;
+    }
+
+    .tab-bar,
+    .note-list {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .editor {
+        padding: 12px;
+    }
+
+    .viewer {
+        padding: 0 12px 12px;
+    }
+
+    .config {
+        padding: 12px;
+    }
+
+    .viewer-title {
+        font-size: 17px;
+    }
+}

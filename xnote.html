@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xnote</title>
+<link rel="stylesheet" href="xnote.css">
+<link rel="stylesheet" href="xnote-mobile.css">
+</head>
+<body>
+
+<div id="app">
+    <!-- ── Topbar ──────────────────────────────────────────────────────── -->
+    <div class="topbar">
+        <div class="logo" onclick="showHome()" data-hearth-name>⬡ xnote</div>
+
+        <div class="search-wrap">
+            <span class="search-icon">⌕</span>
+            <input type="text" id="searchInput" placeholder="Search by title, tag, or content…"
+                   oninput="onSearch(this.value)" onfocus="onSearchFocus()" />
+            <div class="dropdown" id="searchDropdown"></div>
+        </div>
+
+        <div class="topbar-actions">
+            <button class="btn btn-accent" onclick="showEditor()">+ New</button>
+            <button class="btn-settings" onclick="showConfig()" title="Settings">⚙</button>
+        </div>
+    </div>
+
+    <!-- ── Home View ───────────────────────────────────────────────────── -->
+    <div class="view active" id="homeView">
+        <div class="tab-bar">
+            <span class="tab active" id="tabRecent" onclick="switchTab('recent')">Recent Notes</span>
+            <span class="tab-divider">|</span>
+            <span class="tab" id="tabAll" onclick="switchTab('all')">All Notes</span>
+        </div>
+        <div class="note-list" id="noteList"></div>
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <!-- ── Editor View ─────────────────────────────────────────────────── -->
+    <div class="view" id="editorView">
+        <div class="editor">
+            <div>
+                <div class="field-label">Title</div>
+                <input type="text" class="field-input" id="editorTitle" placeholder="Note title…" />
+            </div>
+            <div>
+                <div class="field-label">Tags (comma separated)</div>
+                <input type="text" class="field-input" id="editorTags" placeholder="e.g. ideas, project, draft" />
+            </div>
+            <div class="editor-toolbar">
+                <div class="field-label">Note Body</div>
+                <button class="btn btn-ghost" onclick="attachImage()" style="font-size:11px; padding:5px 12px;">📎 Attach Image</button>
+            </div>
+            <div class="editor-body">
+                <textarea id="editorBody" placeholder="Write your note here… HTML is supported."></textarea>
+            </div>
+            <div class="editor-actions">
+                <button class="btn btn-ghost" onclick="showHome()">Cancel</button>
+                <button class="btn btn-accent" onclick="saveNote()">Save Note</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Viewer View ─────────────────────────────────────────────────── -->
+    <div class="view" id="viewerView">
+        <div class="viewer">
+            <div class="viewer-header">
+                <div class="viewer-title" id="viewerTitle" onclick="popOutNote()" title="Click to open in new window" style="cursor:pointer;"></div>
+                <div class="viewer-meta" id="viewerMeta"></div>
+                <div class="viewer-actions">
+                    <button class="btn btn-green" onclick="editCurrent()">Edit</button>
+                    <button class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+                </div>
+                <div class="viewer-divider"></div>
+            </div>
+            <div class="viewer-body">
+                <div class="viewer-body-inner" id="viewerBody"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Config View ────────────────────────────────────────────────── -->
+    <div class="view" id="configView">
+        <div class="config">
+            <div class="config-section">
+                <div class="config-section-title">Presets</div>
+                <div class="preset-bar" id="presetBar"></div>
+            </div>
+
+            <div class="config-divider"></div>
+
+            <div class="config-section">
+                <div class="config-section-title">Typeface</div>
+                <div class="config-row">
+                    <label>Font family</label>
+                    <select class="config-select" id="fontSelect" onchange="onFontChange(this.value)"></select>
+                    <span class="font-preview" id="fontPreview">The quick brown fox…</span>
+                </div>
+            </div>
+
+            <div class="config-divider"></div>
+
+            <div class="config-section">
+                <div class="config-section-title">Display</div>
+                <div class="config-row">
+                    <label>Recent notes shown</label>
+                    <select class="config-select" id="recentLimitSelect" onchange="onRecentLimitChange(this.value)" style="min-width:80px;">
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+                <div class="config-row">
+                    <label>All notes per page</label>
+                    <select class="config-select" id="allNotesPageSizeSelect" onchange="onAllNotesPageSizeChange(this.value)" style="min-width:80px;">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+                <div class="config-row">
+                    <label>All notes sort order</label>
+                    <select class="config-select" id="allNotesSortSelect" onchange="onAllNotesSortChange(this.value)" style="min-width:80px;">
+                        <option value="date_viewed">Last Viewed</option>
+                        <option value="date_modified">Last Modified</option>
+                        <option value="date_created">Date Created</option>
+                        <option value="title">Alphabetical</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="config-divider"></div>
+
+            <div class="config-section">
+                <div class="config-section-title">Colors</div>
+                <div id="colorRows"></div>
+            </div>
+
+            <div class="config-actions">
+                <button class="btn btn-ghost" onclick="cancelConfig()">Cancel</button>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn btn-ghost" onclick="resetConfig()">Reset to Default</button>
+                    <button class="btn btn-accent" onclick="applyConfig()">Apply Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── Delete Confirmation ─────────────────────────────────────────────── -->
+<div class="overlay" id="deleteOverlay">
+    <div class="dialog">
+        <h3>Delete Note</h3>
+        <p id="deleteMessage">Permanently delete this note? This cannot be undone.</p>
+        <div class="dialog-actions">
+            <button class="btn btn-ghost" onclick="closeDelete()">Cancel</button>
+            <button class="btn btn-danger" onclick="doDelete()">Delete</button>
+        </div>
+    </div>
+</div>
+
+<script src="xnote.js"></script>
+
+</body>
+</html>
