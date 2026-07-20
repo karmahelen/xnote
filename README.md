@@ -1,5 +1,7 @@
 # xnote
 
+[![Code Status](https://github.com/karmahelen/hearth/actions/workflows/security-scans.yml/badge.svg)](https://github.com/karmahelen/hearth/security/code-scanning)
+
 xnote is a personal note-taking app built on the Hearth framework (https://github.com/karmahelen/hearth). Notes are stored in a SQLite database (xnote.db) locally.
 
 This was the first app I made on the Hearth framework. After looking at different options for keeping notes I decided to create something that I could have better control over.
